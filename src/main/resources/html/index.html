@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CHAT</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS-->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+</head>
+<body>
+</body>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+    function conectar() {
+        console.log("vai se conecatar");
+        window.WebSocket = window.WebSocket || window.MozWebSocket;
+
+        var connection = new WebSocket('ws://127.0.0.1:8080/message');
+
+        connection.onopen = function () {
+            // connection is opened and ready to use
+            console.log("conexao aberta")
+        };
+
+        connection.onerror = function (error) {
+            // an error occurred when sending/receiving data
+            console.log("conexao fechada")
+        };
+
+        connection.onmessage = function (message) {
+            // try to decode json (I assume that each message
+            // from server is json)
+            try {
+                var json = JSON.parse(message.data);
+            } catch (e) {
+                console.log('This doesn\'t look like a valid JSON: ',
+                    message.data);
+                return;
+            }
+            // handle incoming message
+        };
+    }
+
+    conectar()
+
+</script>
+
+
+</body>
+</html>
